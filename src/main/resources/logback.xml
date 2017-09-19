@@ -16,12 +16,12 @@
     </appender>
 
     <appender name="KAFKA" class="com.hzh.log.appender.KafkaAppender">
-
+        <bootstrapServers>lab1:9092</bootstrapServers>
+        <topic>test</topic>
     </appender>
 
-    <root level="debug">
-        <appender-ref ref="STDOUT"/>
-        <appender-ref ref="FILE"/>
+    <root level="INFO,ERROR">
+        <!--<appender-ref ref="FILE"/>-->
         <appender-ref ref="KAFKA"/>
     </root>
 </configuration>
