@@ -2,10 +2,13 @@ package com.hzh.log.appender;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.AppenderBase;
+import com.hzh.log.formatter.Formatter;
+import com.hzh.log.formatter.MessageFormatter;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
+import java.text.Format;
 import java.util.Properties;
 
 public class KafkaAppender extends AppenderBase<ILoggingEvent> {
@@ -13,6 +16,8 @@ public class KafkaAppender extends AppenderBase<ILoggingEvent> {
     private String bootstrapServers;
 
     private String topic;
+
+    private Formatter formatter;
 
     public String getBootstrapServers() {
         return bootstrapServers;
@@ -28,6 +33,14 @@ public class KafkaAppender extends AppenderBase<ILoggingEvent> {
 
     public void setTopic(String topic) {
         this.topic = topic;
+    }
+
+    public Formatter getFormatter() {
+        return formatter;
+    }
+
+    public void setFormatter(Formatter formatter) {
+        this.formatter = formatter;
     }
 
     private Producer<String, String> producer;
@@ -49,7 +62,11 @@ public class KafkaAppender extends AppenderBase<ILoggingEvent> {
     }
 
     protected void append(ILoggingEvent event) {
-        this.producer.send(new ProducerRecord<>(this.topic, event.getFormattedMessage()));
+        if (formatter == null) {
+            //Default formatter
+            formatter = new MessageFormatter();
+        }
+        this.producer.send(new ProducerRecord<>(this.topic, this.formatter.format(event)));
     }
 
     @Override

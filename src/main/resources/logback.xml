@@ -18,6 +18,7 @@
     <appender name="KAFKA" class="com.hzh.log.appender.KafkaAppender">
         <bootstrapServers>lab1:9092</bootstrapServers>
         <topic>test</topic>
+        <formatter class="com.hzh.log.formatter.JsonFormatter"></formatter>
     </appender>
 
     <root level="INFO">
