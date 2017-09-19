@@ -45,7 +45,7 @@ public class KafkaAppender extends AppenderBase<ILoggingEvent> {
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         this.producer = new KafkaProducer<>(props);
-        this.producer.send(new ProducerRecord<>(this.topic, "Start app"));
+//        this.producer.send(new ProducerRecord<>(this.topic, "Start app"));
     }
 
     protected void append(ILoggingEvent event) {

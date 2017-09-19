@@ -20,8 +20,9 @@
         <topic>test</topic>
     </appender>
 
-    <root level="INFO,ERROR">
+    <root level="INFO">
         <!--<appender-ref ref="FILE"/>-->
+        <appender-ref ref="STDOUT"/>
         <appender-ref ref="KAFKA"/>
     </root>
 </configuration>
